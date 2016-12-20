@@ -10,7 +10,14 @@
        (let [[data (db.all)]]
          (render-template "index.html" :notes data)))
 
-(route get-note "/<note>" []
+(route get-note "/<note_slug>" [note-slug]
+       (let [[q (Query)]
+             [note-hash (first (db.search (= q.slug note-slug)))]]
+         (if (!= note-hash nil)
+           (render-template "show.html" :note note-hash)
+           (render-template "404.html"))))
+
+(route edit-note "/<note>/edit" []
        (let [[q (Query)]
              [note-hash (db.search (= q.id (int note)))]]
-         (render-template "index.html" :note note-hash)))
+         (render-template "edit.html" :note note-hash)))

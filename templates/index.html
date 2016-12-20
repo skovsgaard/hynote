@@ -9,7 +9,7 @@
 <div class="row">
   {% for x in notes %}
   <div class="four columns">
-    <h5>{{ x["title"] }}</h5>
+    <a href="/{{ x["slug"] }}"><h5>{{ x["title"] }}</h5></a>
     <p>{{ x["content"] }}</p>
   </div>
   {% endfor %}
