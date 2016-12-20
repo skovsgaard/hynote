@@ -2,3 +2,6 @@ lib
 lib64
 bin
 include
+
+# Don't bring the "db"
+*.json
