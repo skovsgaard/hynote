@@ -17,7 +17,9 @@
            (render-template "show.html" :note note-hash)
            (render-template "404.html"))))
 
-(route edit-note "/<note>/edit" []
+(route edit-note "/<note_slug>/edit" [note-slug]
        (let [[q (Query)]
-             [note-hash (db.search (= q.id (int note)))]]
-         (render-template "edit.html" :note note-hash)))
+             [note-hash (db.search (= q.slug note-slug))]]
+         (if (!= note-hash nil)
+           (render-template "edit.html" :note note-hash)
+           (render-template "404.html"))))
