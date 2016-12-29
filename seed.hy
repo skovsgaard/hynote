@@ -1,21 +1,18 @@
-(import [tinydb [TinyDB Query]]
+(import couchdb
         [slugify [slugify]])
 
-(setv db (TinyDB "hynotes.json"))
-(setv dummy-data [{"id" 0
-                   "title" "Hy world"
+(setv couch (couchdb.Server "http://localhost:5984/"))
+(setv db (couch.create "hynote"))
+(setv dummy-data [{"title" "Hy world"
                    "content" "Dear diary. Today I wrote an app in Hy."
                    "slug" (slugify "Hy world")}
-                  {"id" 1
-                   "title" "Oh by the way"
+                  {"title" "Oh by the way"
                    "content" "I never knew I needed a notetaking app"
-                   "slug" (slugify "oh by the way")}
-                  {"id" 2
-                   "title" "And one more thing"
+                   "slug" (slugify "Oh by the way")}
+                  {"title" "And one more thing"
                    "content" "Hy is the funnest language ever."
-                   "slug" (slugify "and one more thing")}])
+                   "slug" (slugify "And one more thing")}])
 
-(for [row dummy-data]
-  (db.insert row))
+(for [row dummy-data] (db.save row))
 
-(print "Seeded the TinyDB datastore")
+(print "Seeded the CouchDB database")
