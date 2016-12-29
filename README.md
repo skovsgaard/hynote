@@ -4,6 +4,7 @@ This is a sample application showing how to build a simple web application using
 
 It uses TinyDB which stores its "database" as a regular JSON file. Given that TinyDB is essentially document oriented, this sample app should be possible to adapt for use with Couch, Mongo, or similar.
 
+If you want information on how to use CouchDB with Flask and Hy in the same way, please see the `couch` branch of this repository.
 
 ## Running the app
 
