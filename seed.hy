@@ -17,3 +17,5 @@
 
 (for [row dummy-data]
   (db.insert row))
+
+(print "Seeded the TinyDB datastore")

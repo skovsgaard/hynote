@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+  <div class="four columns" style="margin-top: 25%">
+    <h4>Edit a note</h4>
+    <form class="edit-form" action="" method="post">
+      <input name="title" type="text" value="{{ note["title"] }}">
+      <textarea name="content">{{ note["content"] }}</textarea>
+      <input type="submit" value="Save" class="button button-primary">
+      <a href="/{{ note["slug"] }}" class="button">Cancel</a>
+    </form>
+    {{ note }}
+  </div>
+</div>
+{% endblock %}
