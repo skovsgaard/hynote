@@ -2,6 +2,7 @@ lib
 lib64
 bin
 include
+pip-selfcheck.json
 
 # Don't bring the "db"
 *.json
