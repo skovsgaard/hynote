@@ -1,4 +1,4 @@
-(import [flask [Flask render-template]]
+(import [flask [Flask render-template request]]
         [tinydb [TinyDB Query]])
 
 (setv db (TinyDB "hynotes.json"))
@@ -26,10 +26,13 @@
         (render-template "404.html")))))
 
 (with-decorator (app.route "/<note_slug>/edit" :methods ["POST"])
-  (defn do-edit-note [note-slug &rest params]
+  (defn do-edit-note [note-slug]
     (let [[q (Query)]
-          [note-hash (first (db.search (= q.slug note-slug)))]]
-      (do (print params)
-          (db.update note-hash (= q.slug note-slug))
+          [note-hash (first (db.search (= q.slug note-slug)))]
+          [update-hash {"title" (get request.form "title")
+                        "content" (get request.form "content")}]]
+      (do (print request.form)
+          (db.update update-hash (= q.slug note-slug))
+          (.update note-hash update-hash)
           (render-template "show.html" :note note-hash)))))
 
