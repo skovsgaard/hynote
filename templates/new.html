@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+  <div class="four columns" style="margin-top: 25%">
+    <h4>Create a new note!</h4>
+    <form class="create-form" action="/create" method="post">
+      <input name="title" type="text" placeholder="Your title here">
+      <textarea name="content" placeholder="Your content here"></textarea>
+      <input type="submit" value="Save" class="button button-primary">
+      <a href="/" class="button">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

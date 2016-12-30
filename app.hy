@@ -1,4 +1,4 @@
-(import [flask [Flask render-template request]]
+(import [flask [Flask render-template redirect request]]
         [tinydb [TinyDB Query]])
 
 (setv db (TinyDB "hynotes.json"))
@@ -8,6 +8,15 @@
   (defn get-index []
     (let [[data (db.all)]]
       (render-template "index.html" :notes data))))
+
+(with-decorator (app.route "/new" :methods ["GET"])
+  (defn new-note []
+    (render-template "new.html")))
+
+(with-decorator (app.route "/create" :methods ["POST"])
+  (defn create-note []
+    (print request.form)
+    (redirect "/")))
 
 (with-decorator (app.route "/<note_slug>" :methods ["GET"])
   (defn get-note [note-slug]
