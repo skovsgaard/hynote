@@ -45,9 +45,20 @@
            del)
       (redirect "/"))))
 
+(with-decorator (app.route "/new" :methods ["GET"])
+  (defn new-note []
+    (render-template "new.html")))
+
+(with-decorator (app.route "/create" :methods ["POST"])
+  (defn create-note []
+    (let [[create-hash {"title" (get request.form "title")
+                        "content" (get request.form "content")
+                        "slug" (slugify (get request.form "title"))}]]
+      (db.save create-hash)
+      (redirect (+ "/" (get create-hash "slug"))))))
+
 (defn find-by-slug [slug database]
   (let [[data-view (database.view "notes/by_slug")]]
-    (get (first (filter (fn [x]
-                          (= (get x.value "slug") slug))
+    (get (first (filter (fn [x] (= (get x.value "slug") slug))
                         data-view))
          "value")))
