@@ -6,6 +6,9 @@
     <p>{{ note["content"] }}</p>
     <a class="button button-primary" href="/{{ note["slug"] }}/edit">Edit this note</a>
     <a class="button" href="/">Go home</a>
+    <form class="delete-form" action="/{{ note["slug"] }}/delete" method="post">
+      <input type="submit" value="Delete this note" class="button" style="background-color:#fe1800;color:#fff;">
+    </form>
   </div>
 </div>
 {% endblock %}

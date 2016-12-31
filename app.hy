@@ -1,4 +1,4 @@
-(import [flask [Flask render-template request]]
+(import [flask [Flask render-template redirect request]]
         couchdb
         [slugify [slugify]])
 
@@ -36,6 +36,14 @@
                         "_rev" (get note-hash "_rev")}]]
       (do (setv (get db (get note-hash "_id")) update-hash)
           (render-template "show.html" :note update-hash)))))
+
+(with-decorator (app.route "/<note_slug>/delete" :methods ["POST"])
+  (defn delete-note [note-slug]
+    (let [[to-delete (find-by-slug note-slug db)]]
+      (->> (get to-delete "_id")
+           (get db)
+           del)
+      (redirect "/"))))
 
 (defn find-by-slug [slug database]
   (let [[data-view (database.view "notes/by_slug")]]
