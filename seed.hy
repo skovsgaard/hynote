@@ -1,4 +1,4 @@
-(import [tinydb [TinyDB Query]]
+(import [tinydb [TinyDB]]
         [slugify [slugify]])
 
 (setv db (TinyDB "hynotes.json"))
