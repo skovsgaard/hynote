@@ -6,8 +6,8 @@
 
 #@((app.route "/" :methods ["GET"])
    (defn get-index []
-     (let [data (db.all)]
-       (render-template "index.html" :notes data))))
+     (setv data (db.all))
+     (render-template "index.html" :notes data)))
 
 #@((app.route "/new" :methods ["GET"])
    (defn new-note []
@@ -20,28 +20,28 @@
 
 #@((app.route "/<note_slug>" :methods ["GET"])
    (defn get-note [note-slug]
-     (let [q (Query)
-           note-hash (first (db.search (= q.slug note-slug)))]
-       (if note-hash
-         (render-template "show.html" :note note-hash)
-         (render-template "404.html")))))
+     (setv q (Query))
+     (setv note-hash (first (db.search (= q.slug note-slug))))
+     (if note-hash
+       (render-template "show.html" :note note-hash)
+       (render-template "404.html"))))
 
 #@((app.route "/<note_slug>/edit" :methods ["GET"])
    (defn edit-Note [note-slug]
-     (let [q (Query)
-           note-hash (first (db.search (= q.slug note-slug)))]
-       (if note-hash
-         (render-template "edit.html" :note note-hash)
-         (render-template "404.html")))))
+     (setv q (Query))
+     (setv note-hash (first (db.search (= q.slug note-slug))))
+     (if note-hash
+       (render-template "edit.html" :note note-hash)
+       (render-template "404.html"))))
 
 #@((app.route "/<note_slug>/edit" :methods ["POST"])
    (defn do-edit-note [note-slug]
-     (let [q (Query)
-           note-hash (first (db.search (= q.slug note-slug)))
-           update-hash {"title" (get request.form "title")
-                                "content" (get request.form "content")}]
-       (do (print request.form)
-           (db.update update-hash (= q.slug note-slug))
-           (.update note-hash update-hash)
-           (render-template "show.html" :note note-hash)))))
+     (setv q (Query))
+     (setv note-hash (first (db.search (= q.slug note-slug))))
+     (setv update-hash {"title" (get request.form "title")
+                        "content" (get request.form "content")})
+     (do (print request.form)
+         (db.update update-hash (= q.slug note-slug))
+         (.update note-hash update-hash)
+         (render-template "show.html" :note note-hash))))
 

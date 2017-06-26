@@ -6,3 +6,5 @@ pip-selfcheck.json
 
 # Don't bring the "db"
 *.json
+
+__pycache__
